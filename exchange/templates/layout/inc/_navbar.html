@@ -1,0 +1,21 @@
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-1 mr-0 px-3" href="{% url 'dashboard' %}">Exchange</a>
+  <span class="text-light">Рабочий стол пользователя:
+<!--    <span class="text-light">-->
+      {% if request.user.is_authenticated %}
+        {{ user }}
+      {% else %}
+        Не авторизован
+      {% endif %}
+<!--    </span>-->
+  </span>
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      {% if request.user.is_authenticated %}
+        <a class="nav-link" href="#">Выйти</a>
+      {% else %}
+        <a class="nav-link" href="#">Вход</a>
+      {% endif %}
+    </li>
+  </ul>
+</nav>
