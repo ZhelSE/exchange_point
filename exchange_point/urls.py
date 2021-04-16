@@ -13,14 +13,26 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import debug_toolbar
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.contrib.auth.decorators import login_required
+from django.contrib.staticfiles.views import serve
+from django.urls import path, include
+from django.views.decorators.cache import never_cache
 from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='layout/base.html',
-                                       extra_context={'title': 'Обменный пункт'}
-                                       ),
+    path('__debug__/', include(debug_toolbar.urls)),
+    path('accounts/', include('accounts.urls', namespace='account')),
+    path('', login_required(TemplateView.as_view(
+        template_name='layout/base.html',
+    )),
          name='dashboard'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns.append(path('static/<path:path>', never_cache(serve)))

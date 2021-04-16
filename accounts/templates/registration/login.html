@@ -1,0 +1,14 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block title %}{{block.super }} :: Вход{% endblock %}
+{% block panel %}
+    <h5>Вход</h5>
+    <div class="login-form">
+        <form action="{% url 'accounts:login' %}" method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}" />
+            <p><input type="submit" value="Войти"></p>
+        </form>
+    </div>
+{% endblock %}
