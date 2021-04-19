@@ -7,6 +7,12 @@
         <form action="{% url 'accounts:login' %}" method="post">
             {{ form.as_p }}
             {% csrf_token %}
+            <div class="form-group">
+              <span class="label">{{form.username.label}}</span>
+                <div class="form-control">
+                 {{form.username}}
+                </div>
+            </div>
             <input type="hidden" name="next" value="{{ next }}" />
             <p><input type="submit" value="Войти"></p>
         </form>
