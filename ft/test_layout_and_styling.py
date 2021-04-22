@@ -5,7 +5,7 @@ class LayoutAndStylingTest(FunctionalTest):
 
     def test_layout_and_styling(self):
         # Открываем домашнюю страницу
-        self.browser.get(self.live_server_url)
+        self.browser.get(self.server_url)
         # Устанавливаем ширину окна
         self.browser.set_window_size(1024, 768)
         # Панель навигации на месте

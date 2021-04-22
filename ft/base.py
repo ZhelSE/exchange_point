@@ -1,4 +1,5 @@
 import time
+import sys
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
@@ -21,6 +22,17 @@ def wait(fn):
 
 
 class FunctionalTest(StaticLiveServerTestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        # Если хотим использовать сервер не по умолчанию
+        for arg in sys.argv:
+            if 'liveserver' in arg:
+                cls.server_host = arg.split('=')[1]
+                cls.server_url = 'http://' + cls.server_host
+                return
+        super().setUpClass()
+        cls.server_url = cls.live_server_url
 
     def setUp(self):
         self.browser = webdriver.Firefox()

@@ -4,17 +4,24 @@ from django.urls import reverse
 from exchange_point.settings import LOGIN_URL
 from django.contrib.auth import get_user_model
 
+USER_MODEL = get_user_model()
+
+CREDENTIALS = {
+    'username': 'john',
+    'password': '12345678',
+    'email': 'normal@user.com',
+}
+
 
 class HomePageTest(TestCase):
 
-    def setUp(self):
-        self.username = 'john'
-        self.password = 'secret123'
-        get_user_model().objects.create_user(username=self.username, email='normal@user.com', password=self.password)
+    @classmethod
+    def setUpTestData(cls):
+        get_user_model().objects.create_user(**CREDENTIALS)
 
     def test_uses_homepage_with_correct_template(self):
         """ Тест: авторизованный пользователь заходит на домашнюю страницу с правильным шаблоном"""
-        self.client.login(username=self.username, password=self.password)
+        self.client.login(**CREDENTIALS)
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'layout/base.html')
 

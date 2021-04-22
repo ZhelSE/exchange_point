@@ -2,19 +2,18 @@
 {% load static %}
 {% block title %}{{block.super }} :: Вход{% endblock %}
 {% block panel %}
-    <h5>Вход</h5>
-    <div class="login-form">
-        <form action="{% url 'accounts:login' %}" method="post">
-            {{ form.as_p }}
-            {% csrf_token %}
-            <div class="form-group">
-              <span class="label">{{form.username.label}}</span>
-                <div class="form-control">
-                 {{form.username}}
-                </div>
-            </div>
-            <input type="hidden" name="next" value="{{ next }}" />
-            <p><input type="submit" value="Войти"></p>
-        </form>
-    </div>
+  <h5>Вход</h5>
+  <div class="login-form">
+    <form action="{% url 'accounts:login' %}" method="post">
+      <p><label for="username">Имя пользователя:</label>
+        <input id="username" type="text" name="username" autofocus autocapitalize="none" required>
+      </p>
+      <p><label for="password">Пароль:</label>
+        <input id="password" type="password" name="password" required>
+      </p>
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}" />
+      <p><input id="login" type="submit" value="Войти"></p>
+      </form>
+  </div>
 {% endblock %}
